@@ -84,7 +84,8 @@ public class GestionClient
 
                 for (Reservation res : reservationList) {
 
-                    if (date.before(res.getDate_fin()))
+                    if (!res.getDate_debut().after(date) && res.getDate_fin().after(date))
+
                         throw new AubergeInnException("Client " + idClient + " a une réservation en cours.");
                 }
             }
