@@ -15,6 +15,8 @@ public class Reservation
     private double prix_total;
     private Date date_debut;
     private Date date_fin;
+    private Client client;
+    private Chambre chambre;
 
 
     // constructeurs de la classe
@@ -41,11 +43,28 @@ public class Reservation
     }
 
 
+    public Double getPrixTotal() {
+        return prix_total;
+    }
 
+    public Client getClient() { return this.client; }
+
+    public Chambre getChambre() { return this.chambre; }
+
+   // public Client getClient() {return this.idClient;}
+
+    public int getIdClient() { return idClient; }
     public Date getDate_debut() {
         return date_debut;
     }
 
+    public int getIdChambre() {
+        return idChambre;
+    }
+
+    //public int getChambre() {
+       // return idChambre;
+    //}
 
     public void setDate_debut(Date date_debut) {
         this.date_debut = date_debut;

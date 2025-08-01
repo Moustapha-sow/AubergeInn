@@ -45,8 +45,8 @@ public class Commodites
      * Ajoute une nouvelle commodité dans la base de données.
      */
 
-    public Commodite ajouterCommodite(int idCommodite, String description, float surplus_Prix) {
-        Commodite comm = new Commodite(idCommodite, description, surplus_Prix);
+    public Commodite ajouterCommodite(int idCommodite, String description, double surplusPrix) {
+        Commodite comm = new Commodite(idCommodite, description, surplusPrix);
         commoditesCollection.insertOne(comm.toDocument());
         return comm;
     }
@@ -90,7 +90,7 @@ public class Commodites
 
 
     // cette fonction est facultative
-    public boolean modifierCommodite(int idCommodite, String nouvelleDescription, float nouveauSurplus) {
+    public boolean modifierCommodite(int idCommodite, String nouvelleDescription, double nouveauSurplus) {
         Document updateFields = new Document()
                 .append("description", nouvelleDescription)
                 .append("surplus_Prix", nouveauSurplus);
@@ -150,6 +150,24 @@ public class Commodites
             }
         }
         return commoditeList;
+    }
+
+    /*
+     * Obtenir tous les clients dans la BD
+     */
+    public List<Commodite> getTouteLesCommodites() {
+        List<Commodite> commodites = new LinkedList<Commodite>();
+        MongoCursor<Document> cursor = commoditesCollection.find().iterator();
+        try{
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                Commodite commodite = new Commodite(doc);
+                commodites.add(commodite);
+            }
+        } finally{
+            cursor.close();
+        }
+        return commodites;
     }
 
 

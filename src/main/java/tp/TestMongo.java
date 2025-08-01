@@ -42,7 +42,7 @@ public class TestMongo {
                     .append("prenom", "SSS")
                     .append("age", 25);
 
-            Document client2 = new Document("nom", "NNN")
+            Document client2 = new Document("nom", "ZZZZ")
                     .append("prenom", "NNN")
                     .append("age", 30);
 

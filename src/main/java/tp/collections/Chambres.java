@@ -9,6 +9,8 @@ import org.bson.Document;
 import java.util.LinkedList;
 import java.util.List;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.addToSet;
+import static com.mongodb.client.model.Updates.pull;
 
 //import static javax.management.Query.eq;
 
@@ -35,6 +37,13 @@ public class Chambres {
     public boolean existe(int idChambre) {
         return chambresCollection.find(eq("idChambre", idChambre)).first() != null;
 
+    }
+
+    /**
+     * Ajout d'une nouvelle commodité à la chambre.
+     */
+    public void inclureCommodite(int idChambre, int idCommodite) {
+        chambresCollection.updateOne(eq("idChambre", idChambre), addToSet("idCommodites", idCommodite));
     }
 
 
@@ -96,5 +105,31 @@ public class Chambres {
         }
 
         return chambres;
+    }
+
+    /**
+     * Lecture de la liste des commodites d'une chambre
+     */
+    public List<Integer> getListeCommoditesChambre(Chambre chambre)
+    {
+        if (chambre != null) {
+            return chambre.getCommodites();
+        }
+        return new LinkedList<>();
+    }
+
+    /**
+     *  Enlever une commodité lié à une chambre
+     */
+    public void supprimerCommodite(int idChambre, int idCommodite) {
+        chambresCollection.updateOne(eq("idChambre", idChambre), pull("idCommodites", idCommodite));
+    }
+
+    /**
+     *  Valider si une commodité est lié à une chambre
+     */
+    public boolean validerCommoditeChambre(int idChambre, int idCommodite) {
+        Chambre chambre = getChambre(idChambre);
+        return chambre != null && chambre.getCommodites().contains(idCommodite);
     }
 }

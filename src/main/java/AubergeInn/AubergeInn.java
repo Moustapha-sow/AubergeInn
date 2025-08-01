@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 ///  classe AubergeInn
 public class AubergeInn
 {
-    private static GestionAubergeInn gestionInn;
+    private static GestionAubergInn gestionInn;
     /**
      * @param args
      */
@@ -51,7 +51,7 @@ public class AubergeInn
     public AubergeInn(String serveur, String bd, String user, String pass)
             throws Exception
     {
-        gestionInn = new GestionAubergeInn(serveur, bd, user, pass);
+        gestionInn = new GestionAubergInn(serveur, bd, user, pass);
     }
     // fermeture de la connexion
     public void fermer() throws Exception

@@ -18,6 +18,8 @@ public class Chambre
     private double prix_base;
     private List<tp.objets.Commodite> commodites;
     private List<tp.objets.Reservation> reservations;
+    private List<Integer> idCommodites = new LinkedList<>();
+    private double total;
 
 
 
@@ -51,26 +53,37 @@ public class Chambre
         this.idChambre = idChambre;
     }
 
-    public String getNom_chambre() {
-        return nom_chambre;
+    public double getPrix_base() {
+        return prix_base;
+    }
+    
+    public String getNomChambre() {
+        return this.nom_chambre;
     }
 
-    public void setNom_chambre(String nom_chambre) {
+    public void setNomChambre(String nom_chambre) {
         this.nom_chambre = nom_chambre;
     }
 
-    public String getType_lit() {
+    public String getTypeLit() {
         return type_lit;
     }
 
-    public void setType_lit(String type_lit) {
+    public void setTypeLit(String type_lit) {
         this.type_lit = type_lit;
     }
 
 
-    public void setPrix_base(float prix_base) {
+    public void setPrixBase(float prix_base) {
         this.prix_base = prix_base;
     }
+
+    public List<Integer> getCommodites()
+    {
+        return idCommodites;
+    }
+
+   // public double getPrixTotal() {return total;}
 
     public double getPrixTotal()
     {
@@ -139,7 +152,7 @@ public class Chambre
         return new Document().append("idChambre", idChambre)
                 .append("nom de Chambre", nom_chambre)
                 .append("type de Lit", type_lit)
-                .append("prix de base ", getPrixTotal());
+                .append("prix_base", prix_base);
 
     }
 

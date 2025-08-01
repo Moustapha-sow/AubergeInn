@@ -1,20 +1,24 @@
 package tp.collections;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import tp.bdd.Connexion;
 import tp.objets.Client;
 import org.bson.Document;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import static com.mongodb.client.model.Filters.eq;
 
 // classe Clients
-public class Clients
-{
+public class Clients {
     private final Connexion cx;
     private final MongoCollection<Document> clientCollection;
 
 
     // constructeur de la classe
-    public Clients(Connexion cx)  {
+    public Clients(Connexion cx) {
         this.cx = cx;
         clientCollection = cx.getDatabase().getCollection("Client");
     }
@@ -40,7 +44,8 @@ public class Clients
     }
 
     /**
-     *la suppression d un client
+     * la suppression d un client
+     *
      * @param idClient L'identifiant du client à supprimer.
      * @return true si le client si supprimé
      */
@@ -57,7 +62,6 @@ public class Clients
     }
 
 
-
     public Client getClient(int idClient) {
 
         Document doc = clientCollection.find(eq("idClient", idClient)).first();
@@ -66,5 +70,34 @@ public class Clients
             return new Client(doc);
         }
         return null;
+    }
+    /*
+    public Client getClient(int idClient) {
+        Document c =clients.find(eq("idClient", idClient)).first();
+        if(c != null){
+            return new Client(c);
+        }
+        return null;
+
+    }
+
+     */
+
+    /**
+     * Obtenir tous les clients dans la BD
+     */
+    public List<Client> getTousLesClients() {
+        List<Client> clients = new LinkedList<>();
+
+        try (MongoCursor<Document> cursor = clientCollection.find().iterator()) {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                clients.add(new Client(doc));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clients;
     }
 }

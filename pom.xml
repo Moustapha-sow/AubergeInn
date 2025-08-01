@@ -23,6 +23,20 @@
             <version>4.11.1</version> <!-- ou une version récente -->
         </dependency>
 
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version> <!-- compatible Tomcat 9 -->
+            <scope>provided</scope>
+        </dependency>
+
+
         <!-- BSON Library -->
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -31,12 +45,7 @@
         </dependency>
 
         <!-- (Déjà présent si tu utilises Jakarta) -->
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>5.0.0</version>
-            <scope>provided</scope>
-        </dependency>
+
     </dependencies>
 
 

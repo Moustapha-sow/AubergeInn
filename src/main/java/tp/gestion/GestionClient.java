@@ -140,5 +140,18 @@ public class GestionClient
         }
     }
 
+    public Client getClient(int idClient) throws AubergeInnException {
+        Client client = clients.getClient(idClient);
+        if (client == null) {
+            throw new AubergeInnException("Client inexistant: " + idClient);
+        }
+        return client;
+    }
+
+    public List<Client> afficherTousClient(){
+        return clients.getTousLesClients();
+    }
 }
+
+
 

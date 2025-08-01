@@ -14,7 +14,8 @@ public class Client {
     private String nom;
     private String prenom;
     private int age;
-    private Set<Reservation> reservations;
+    //private Set<Reservation> reservations;
+    private List<Reservation> reservations;
 
 
     //Constructeur de la classe
@@ -30,7 +31,7 @@ public class Client {
         this.nom = nom;
         this.prenom = prenom;
         this.age = age;
-        this.reservations = new HashSet<>();
+        this.reservations = new ArrayList<>();
     }
 
 
@@ -65,6 +66,10 @@ public class Client {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<Reservation> getReservations() {
+        return this.reservations;
     }
 
     // fonction pour afficher les info du client
