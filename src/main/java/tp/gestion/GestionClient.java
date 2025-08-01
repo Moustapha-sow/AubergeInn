@@ -57,7 +57,12 @@ public class GestionClient
 
     // faculatatif
     public boolean modifierClient(int idClient, String nom, String prenom, int age) {
-        return clients.modifierClient(idClient, nom, prenom, age);
+        try {
+            return clients.modifierClient(idClient, nom, prenom, age);
+        } catch (AubergeInnException e) {
+            System.err.println("Erreur lors de la modification du client : " + e.getMessage());
+            return false;
+        }
     }
 
 

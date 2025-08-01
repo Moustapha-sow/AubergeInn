@@ -2,6 +2,7 @@ package tp.collections;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import main.AubergeInnException;
 import org.bson.types.ObjectId;
 import tp.bdd.Connexion;
 import tp.objets.Commodite;
@@ -54,11 +55,15 @@ public class Commodites
     /**
      * Effectue une liaison une commodité à une chambre dans la base de données.
      */
-    public Commodite inclureCommodite(int idCommodite, int idChambre) {
+    public Commodite inclureCommodite(int idCommodite, int idChambre) throws AubergeInnException {
+        try {
         Commodite comm = new Commodite(idCommodite, idChambre);
 
         commoditesChambres_Collection.insertOne(comm.toDocInclure());
         return comm;
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de l'inclusion de la commodité dans la chambre : " + e.getMessage());
+        }
     }
 
 
@@ -67,7 +72,9 @@ public class Commodites
      * Supprime la liaison entre une commodité et une chambre.
      *
      */
-    public void enleverCommodite(int idCommodite, int idChambre) {
+    public void enleverCommodite(int idCommodite, int idChambre)
+            throws AubergeInnException {
+        try {
         ObjectId _id = null;
 
 
@@ -77,6 +84,7 @@ public class Commodites
                 Document document = doc.next();
                 if (document.getInteger("idCommodite") == idCommodite && document.getInteger("idChambre") == idChambre) {
                     _id = document.getObjectId("_id");
+                    break;
                 }
             }
         } finally {
@@ -84,18 +92,26 @@ public class Commodites
         }
 
 
-
-        commoditesChambres_Collection.deleteOne(eq("_id", _id)).getDeletedCount();
+            if (_id != null) {
+        commoditesChambres_Collection.deleteOne(eq("_id", _id)).getDeletedCount();}
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de la suppression de la commodité de la chambre : " + e.getMessage());
+        }
     }
 
 
     // cette fonction est facultative
-    public boolean modifierCommodite(int idCommodite, String nouvelleDescription, float nouveauSurplus) {
+    public boolean modifierCommodite(int idCommodite, String nouvelleDescription, float nouveauSurplus)
+            throws AubergeInnException {
+        try {
         Document updateFields = new Document()
                 .append("description", nouvelleDescription)
                 .append("surplus_Prix", nouveauSurplus);
         Document update = new Document("$set", updateFields);
         return commoditesCollection.updateOne(eq("idCommodite", idCommodite), update).getModifiedCount() > 0;
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de la modification de la commodité : " + e.getMessage());
+        }
     }
 
 

@@ -98,18 +98,23 @@ public class Reservations
     public Reservation reserver(int idClient, int idChambre, double prix_total, Date date_debut, Date date_fin)
             throws AubergeInnException
     {
-
+        try {
         Reservation reservation = new Reservation(idClient,idChambre, prix_total, date_debut, date_fin);
 
         reservationsCollection.insertOne(reservation.toDocument());
 
         return reservation;
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de la réservation : " + e.getMessage());
+        }
     }
 
 
 
     // fonction pour modifier la reservation
-    public boolean modifierReservation(int idClient, int idChambre, Date nouvelleDateDebut, Date nouvelleDateFin, double nouveauPrix) {
+    public boolean modifierReservation(int idClient, int idChambre, Date nouvelleDateDebut, Date nouvelleDateFin, double nouveauPrix)
+        throws AubergeInnException {
+            try {
         Document updateFields = new Document()
                 .append("date_debut", nouvelleDateDebut)
                 .append("date_fin", nouvelleDateFin)
@@ -121,15 +126,23 @@ public class Reservations
                 eq("idClient", idClient),
                 update
         ).getModifiedCount() > 0;
+            } catch (Exception e) {
+                throw new AubergeInnException("Erreur lors de la modification de la réservation : " + e.getMessage());
+            }
     }
 
 
 
 
-    public boolean supprimerReservation(int idClient, int idChambre) {
+    public boolean supprimerReservation(int idClient, int idChambre)
+            throws AubergeInnException{
+        try {
         return reservationsCollection
                 .deleteOne(eq("idClient", idClient))
                 .getDeletedCount() > 0;
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de la suppression de la réservation : " + e.getMessage());
+        }
     }
 
 

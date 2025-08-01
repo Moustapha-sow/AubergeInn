@@ -2,6 +2,7 @@ package tp.collections;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import main.AubergeInnException;
 import tp.bdd.Connexion;
 import tp.objets.Chambre;
 import org.bson.Document;
@@ -33,31 +34,43 @@ public class Chambres {
 
     // verifie si une chambre existe en cherchant l id
     public boolean existe(int idChambre) {
+        try {
         return chambresCollection.find(eq("idChambre", idChambre)).first() != null;
-
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
    // l ajout d une nouvelle chambre
-    public Chambre ajouterChambre(int idChambre, String nom_chambre, String type_lit, double prix_base) {
+    public Chambre ajouterChambre(int idChambre, String nom_chambre, String type_lit, double prix_base) throws AubergeInnException {
+        try {
 
         Chambre chambre = new Chambre(idChambre, nom_chambre, type_lit, prix_base);
 
 
         chambresCollection.insertOne(chambre.toDocument());
         return chambre;
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de l'ajout de la chambre : " + e.getMessage());
+        }
     }
 
     /**
      * Supprime une chambre de la base de données.
      */
-    public boolean supprimerChambre(int idChambre) {
+    public boolean supprimerChambre(int idChambre) throws AubergeInnException {
+        try {
 
         return chambresCollection.deleteOne(eq("idChambre", idChambre)).getDeletedCount() > 0;
+    } catch (Exception e) {
+        throw new AubergeInnException("Erreur lors de la suppression de la chambre : " + e.getMessage());
+    }
     }
 
 // fonction modifierChambre
-    public boolean modifierChambre(int idChambre, String nouveauNom, String nouveauTypeLit, double nouveauPrix) {
+    public boolean modifierChambre(int idChambre, String nouveauNom, String nouveauTypeLit, double nouveauPrix) throws AubergeInnException {
+        try {
         Document updateFields = new Document()
                 .append("nom_chambre", nouveauNom)
                 .append("type_lit", nouveauTypeLit)
@@ -65,12 +78,16 @@ public class Chambres {
 
         Document update = new Document("$set", updateFields);
         return chambresCollection.updateOne(eq("idChambre", idChambre), update).getModifiedCount() > 0;
+    } catch (Exception e) {
+        throw new AubergeInnException("Erreur lors de la modification de la chambre : " + e.getMessage());
+    }
     }
 
 
 
 
-    public Chambre getChambre(int idChambre) {
+    public Chambre getChambre(int idChambre) throws AubergeInnException {
+        try {
         Document doc = chambresCollection.find(eq("idChambre", idChambre)).first();
 
         if (doc != null) {
@@ -78,10 +95,13 @@ public class Chambres {
         }
 
         return null;
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de la récupération de la chambre : " + e.getMessage());
+        }
     }
 
 
-    public List<Chambre> getAllChambres() {
+    public List<Chambre> getAllChambres() throws AubergeInnException {
         List<Chambre> chambres = new LinkedList<>();
 
 
@@ -93,7 +113,10 @@ public class Chambres {
                 // Crée un objet Chambre à partir du document et l'ajoute à la liste
                 chambres.add(new Chambre(document));
             }
+        } catch (Exception e) {
+            throw new AubergeInnException("Erreur lors de la récupération des chambres : " + e.getMessage());
         }
+
 
         return chambres;
     }

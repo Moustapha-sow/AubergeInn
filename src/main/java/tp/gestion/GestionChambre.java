@@ -101,10 +101,13 @@ public class GestionChambre {
      * Affiche toutes les chambres qui sont actuellement libres.
      */
     public void afficherChambresLibres() {
-
-
-        List<Chambre> listeChambres = chambres.getAllChambres();
-
+        List<Chambre> listeChambres;
+        try {
+             listeChambres= chambres.getAllChambres();
+        } catch (AubergeInnException e) {
+            System.err.println("Impossible de récupérer les chambres : " + e.getMessage());
+            return;
+        }
         // Parcourt la liste des chambres
         for (Chambre ch : listeChambres) {
 
