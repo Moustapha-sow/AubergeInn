@@ -104,7 +104,7 @@ public class AubergeInn
                     String nomChambre = readString(tokenizer);
 
                     String typeLit = readString(tokenizer);
-                    float prix = readInt(tokenizer);
+                    Double prix = readDouble(tokenizer);
                     gestionInn.getGestionChambre().ajouterChambre(idChambre, nomChambre, typeLit, prix);
                 }
 
@@ -122,7 +122,7 @@ public class AubergeInn
                     int idCommodite = readInt(tokenizer);
                     String description = readString(tokenizer);
 
-                    float surplusPrix = readInt(tokenizer);
+                    Double surplusPrix = readDouble(tokenizer);
                     gestionInn.getGestionCommodite().ajouterCommodite(idCommodite, description, surplusPrix);
                 }
 
@@ -254,6 +254,39 @@ public class AubergeInn
         else
             throw new Exception("Autre parametre attendu");
     }
+
+
+//    static Double readDouble(StringTokenizer tokenizer) throws Exception
+//    {
+//        if (tokenizer.hasMoreElements())
+//        {
+//            String token = tokenizer.nextToken();
+//            try
+//            {
+//                return Double.valueOf(token).doubleValue();
+//            }
+//            catch (NumberFormatException e)
+//            {
+//                throw new Exception("Nombre attendu a la place de \"" + token + "\"");
+//            }
+//        }
+//        else
+//            throw new Exception("Autre parametre attendu");
+//    }
+
+    static Double readDouble(StringTokenizer tokenizer) throws Exception {
+        if (!tokenizer.hasMoreTokens()) return null;
+
+        String token = tokenizer.nextToken();
+        if (token.isEmpty()) return null;
+
+        try {
+            return Double.parseDouble(token);
+        } catch (NumberFormatException e) {
+            throw new Exception("Nombre réel attendu à la place de \"" + token + "\"");
+        }
+    }
+
 
     static Date readDate(StringTokenizer tokenizer) throws Exception
     {

@@ -82,7 +82,7 @@
                     </div>
                     <h5 class="card-title">Gestion des Clients</h5>
                     <p class="card-text">Consultez et gérez les informations des clients.</p>
-                    <a href="./clients.jsp" class="btn btn-primary">Accéder</a>
+                    <a href="Clients" class="btn btn-primary">Accéder</a>
                 </div>
             </div>
         </div>

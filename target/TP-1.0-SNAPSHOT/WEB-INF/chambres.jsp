@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="java.util.List" %>
-<%@ page import="AubergeInn.objets.Chambre" %>
-<%@ page import="AubergeInn.objets.Commodite" %>
+<%@ page import="tp.objets.Chambre" %>
+<%@ page import="tp.objets.Commodite" %>
 <%@ page import="com.example.tp.AubergeHelper" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -25,7 +25,12 @@
 
     <h2>Liste des Chambres</h2>
     <%
-        List<Chambre> chambres = AubergeHelper.gestionAubergInnInterro(session).getGestionChambre().getAllChambres();
+        List<Chambre> chambres = null;
+        try {
+            chambres = AubergeHelper.gestionAubergInnInterro(session).getGestionChambre().getAllChambres();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if (chambres != null && !chambres.isEmpty()) {
     %>
     <div class="table-responsive">
@@ -47,7 +52,7 @@
                 <td><%= chambre.getIdChambre() %></td>
                 <td><%= chambre.getNomChambre() %></td>
                 <td><%= chambre.getTypeLit() %></td>
-                <td><%= chambre.getPrixBase() %> $</td>
+                <td><%= chambre.getprixBase() %> $</td>
                 <td>
                     <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewChambreModal<%= chambre.getIdChambre() %>">
                         Voir
@@ -112,7 +117,7 @@
                     <p><strong>ID:</strong> <%= chambre.getIdChambre() %></p>
                     <p><strong>Nom:</strong> <%= chambre.getNomChambre() %></p>
                     <p><strong>Type de lit:</strong> <%= chambre.getTypeLit() %></p>
-                    <p><strong>Prix:</strong> <%= chambre.getPrixBase() %> $</p>
+                    <p><strong>Prix:</strong> <%= chambre.getprixBase() %> $</p>
                     <h5>Commodités</h5>
                     <ul>
                         <%

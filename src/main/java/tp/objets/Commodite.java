@@ -12,7 +12,7 @@ public class Commodite  {
     private int idCommodite;
     private int idChambre;
     private String description;
-    private double surplus_prix;
+    private Double surplusPrix;
     private Set<Chambre> chambres;
 
 
@@ -21,7 +21,7 @@ public class Commodite  {
 
         this.idCommodite = doc.getInteger("idCommodite");
         this.description = doc.getString("description");
-        this.surplus_prix = doc.getDouble("surplusPrix");
+        this.surplusPrix = doc.getDouble("surplusPrix");
         this.chambres = new HashSet<>();
 
     }
@@ -33,10 +33,10 @@ public class Commodite  {
 
     }
 
-    public Commodite(int idCommodite, String description, double surplus_prix) {
+    public Commodite(int idCommodite, String description, Double surplusPrix) {
         this.idCommodite = idCommodite;
         this.description = description;
-        this.surplus_prix = surplus_prix;
+        this.surplusPrix = surplusPrix;
         this.chambres = new HashSet<>();
     }
 
@@ -58,12 +58,12 @@ public class Commodite  {
         this.description = description;
     }
 
-    public double getSurplus_prix() {
-        return surplus_prix;
+    public Double getSurplusPrix() {
+        return surplusPrix;
     }
 
-    public void setSurplus_prix(float surplus_prix) {
-        this.surplus_prix = surplus_prix;
+    public void setSurplusPrix(Double surplusPrix) {
+        this.surplusPrix = surplusPrix;
     }
 
     // fonction pour afficher les commodites diponibles
@@ -72,7 +72,7 @@ public class Commodite  {
         System.out.println("\n" + "Commodité numéro : " + idCommodite);
         System.out.println("Description : " + description);
 
-        System.out.println("Prix en surplus : " + surplus_prix);
+        System.out.println("Prix en surplus : " + surplusPrix);
     }
 
 
@@ -80,7 +80,7 @@ public class Commodite  {
     {
         return new Document().append("idCommodite", idCommodite)
                 .append("description", description)
-                .append("surplusPrix", surplus_prix);
+                .append("surplusPrix", surplusPrix);
     }
 
 

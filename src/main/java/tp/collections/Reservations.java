@@ -79,9 +79,9 @@ public class Reservations {
     /**
      * Enregistre une nouvelle réservation.
      */
-    public Reservation reserver(int idClient, int idChambre, double prixTotal, Date dateDebut, Date dateFin)
+    public Reservation reserver(int idClient,int idReservation, int idChambre, Double prixTotal, Date dateDebut, Date dateFin)
             throws AubergeInnException {
-        Reservation reservation = new Reservation(idClient, idChambre, prixTotal, dateDebut, dateFin);
+        Reservation reservation = new Reservation(idClient, idReservation, idChambre, prixTotal, dateDebut, dateFin);
         try {
             reservationsCollection.insertOne(reservation.toDocument());
         } catch (MongoException e) {
@@ -93,11 +93,11 @@ public class Reservations {
     /**
      * Modifie une réservation existante.
      */
-    public boolean modifierReservation(int idClient, int idChambre, Date nouvelleDateDebut, Date nouvelleDateFin, double nouveauPrix) {
+    public boolean modifierReservation(int idClient, int idChambre, Date nouvelleDateDebut, Date nouvelleDateFin, Double nouveauPrix) {
         Document updateFields = new Document()
-                .append("date_debut", nouvelleDateDebut)
-                .append("date_fin", nouvelleDateFin)
-                .append("prix_total", nouveauPrix);
+                .append("dateDebut", nouvelleDateDebut)
+                .append("dateFin", nouvelleDateFin)
+                .append("prixTotal", nouveauPrix);
 
         Document update = new Document("$set", updateFields);
 
@@ -126,13 +126,21 @@ public class Reservations {
     /**
      * Lecture de la liste des chambres libres
      */
-    public List<Chambre> getListeChambresLibres(Date date_debut, Date date_fin, List<Chambre> chambres) {
+//
+
+    public List<Chambre> getListeChambresLibres(Date dateDebut, Date dateFin, List<Chambre> chambres) {
         List<Reservation> reservations = new LinkedList<>();
-        MongoCursor<Document> cursor = reservationsCollection.find(or(
-                and(lte("date_debut", date_debut), gt("date_fin", date_debut)),
-                and(lt("date_debut", date_fin), gte("date_fin", date_fin)),
-                and(gt("date_debut", date_debut), lt("date_fin", date_fin))
-        )).iterator();
+
+        MongoCursor<Document> cursor = reservationsCollection.find(
+                and(
+                        lt("dateFin", dateFin),
+                        gt("dateDebut", dateDebut)
+                )
+        ).iterator();
+        System.out.println("Chambres totales : " + chambres.size());
+        System.out.println("Réservations conflictuelles : " + reservations.size());
+        //System.out.println("Chambres réservées : " + reservedChambreIds);
+
 
         try {
             while (cursor.hasNext()) {
@@ -142,14 +150,12 @@ public class Reservations {
             cursor.close();
         }
 
-        // On récupère les id des chambres réservées
-        Set<Integer> reservedChambreIds = new HashSet<>();
-        for (Reservation reservation : reservations) {
-            int idChambre = reservation.getIdChambre();
-            reservedChambreIds.add(Math.toIntExact(idChambre));
-        }
+        // Récupère les id des chambres réservées
+        Set<Integer> reservedChambreIds = reservations.stream()
+                .map(Reservation::getIdChambre)
+                .collect(Collectors.toSet());
 
-        // On filtre les chambres qui ne sont pas réservées et les retourne
+        // Filtre les chambres disponibles
         return chambres.stream()
                 .filter(chambre -> !reservedChambreIds.contains(chambre.getIdChambre()))
                 .collect(Collectors.toList());

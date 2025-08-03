@@ -45,7 +45,7 @@
                 <tr>
                     <td><%= commodite.getIdCommodite() %></td>
                     <td><%= commodite.getDescription() %></td>
-                    <td><%= commodite.getSurplus_prix() %> $</td>
+                    <td><%= commodite.getSurplusPrix() %> $</td>
 
                 </tr>
 

@@ -11,33 +11,34 @@ import java.util.*;
 public class Chambre
 {
 
-    private long id;
+    //private long id;
     private int idChambre;
-    private String nom_chambre;
-    private String type_lit;
-    private double prix_base;
+    private String nomChambre;
+    private String typeLit;
+    private Double prixBase;
     private List<tp.objets.Commodite> commodites;
     private List<tp.objets.Reservation> reservations;
     private List<Integer> idCommodites = new LinkedList<>();
-    private double total;
+    private Double total;
 
 
 
 // constructeur de classe
     public Chambre(Document d) {
-        this.idChambre = d.getInteger("idChambre");
-        this.nom_chambre = d.getString("nom_chambre");
-        this.type_lit = d.getString("type_lit");
-        this.prix_base = d.getDouble("prix_base");
+        Integer id = d.getInteger("idChambre");
+        this.idChambre = (id != null) ? id : 0;
+        this.nomChambre = d.getString("nomChambre");
+        this.typeLit = d.getString("typeLit");
+        this.prixBase = d.getDouble("prixBase");
         commodites = new LinkedList<>();
         reservations = new LinkedList<>();
     }
 
-    public Chambre(int idChambre, String nom_chambre, String type_lit, double prix_base) {
+    public Chambre(int idChambre, String nomChambre, String typeLit, Double prixBase) {
         this.idChambre = idChambre;
-        this.nom_chambre = nom_chambre;
-        this.type_lit = type_lit;
-        this.prix_base = prix_base;
+        this.nomChambre = nomChambre;
+        this.typeLit = typeLit;
+        this.prixBase = prixBase;
         commodites = new LinkedList<>();
         reservations = new LinkedList<>();
     }
@@ -53,29 +54,29 @@ public class Chambre
         this.idChambre = idChambre;
     }
 
-    public double getPrix_base() {
-        return prix_base;
+    public Double getprixBase() {
+        return prixBase;
     }
     
     public String getNomChambre() {
-        return this.nom_chambre;
+        return this.nomChambre;
     }
 
-    public void setNomChambre(String nom_chambre) {
-        this.nom_chambre = nom_chambre;
+    public void setNomChambre(String nomChambre) {
+        this.nomChambre = nomChambre;
     }
 
     public String getTypeLit() {
-        return type_lit;
+        return typeLit;
     }
 
-    public void setTypeLit(String type_lit) {
-        this.type_lit = type_lit;
+    public void setTypeLit(String typeLit) {
+        this.typeLit = typeLit;
     }
 
 
-    public void setPrixBase(float prix_base) {
-        this.prix_base = prix_base;
+    public void setPrixBase(Double prixBase) {
+        this.prixBase = prixBase;
     }
 
     public List<Integer> getCommodites()
@@ -85,11 +86,11 @@ public class Chambre
 
    // public double getPrixTotal() {return total;}
 
-    public double getPrixTotal()
+    public Double getPrixTotal()
     {
-        double total = prix_base;
+        Double total = prixBase;
         for (Commodite com : commodites) {
-            total += com.getSurplus_prix();
+            total += com.getSurplusPrix();
         }
         return total;
     }
@@ -111,8 +112,8 @@ public class Chambre
     {
 
         System.out.println("\n" + "Chambre : " + idChambre);
-        System.out.println("Nom de la chambre : " + nom_chambre);
-        System.out.println("Type de lit : " + type_lit);
+        System.out.println("Nom de la chambre : " + nomChambre);
+        System.out.println("Type de lit : " + typeLit);
 
         System.out.println("Prix  : " + getPrixTotal());
         if (!(commodites.size() > 0))
@@ -139,7 +140,7 @@ public class Chambre
         Date now = new Date();
 
         for (Reservation res : reservations){
-            if (res.getDate_debut().before(now) && res.getDate_fin().after(now)){
+            if (res.getDateDebut().before(now) && res.getDateFin().after(now)){
                 return false;
             }
         }
@@ -150,9 +151,9 @@ public class Chambre
     public Document toDocument()
     {
         return new Document().append("idChambre", idChambre)
-                .append("nom de Chambre", nom_chambre)
-                .append("type de Lit", type_lit)
-                .append("prix_base", prix_base);
+                .append("nom de Chambre", nomChambre)
+                .append("type de Lit", typeLit)
+                .append("prixBase", prixBase);
 
     }
 

@@ -45,8 +45,8 @@
         <td><%= reservation.getClient().getPrenom() %> <%= reservation.getClient().getNom() %></td>
         <td><%= reservation.getChambre().getNomChambre() %></td>
         <td><%= reservation.getPrixTotal() %></td>
-        <td><%= reservation.getDate_debut() %></td>
-        <td><%= reservation.getDate_fin() %></td>
+        <td><%= reservation.getDateDebut() %></td>
+        <td><%= reservation.getDateFin() %></td>
     </tr>
     <% } %>
 
@@ -76,7 +76,7 @@
         <td><%= chambre.getIdChambre() %></td>
         <td><%= chambre.getNomChambre() %></td>
         <td><%= chambre.getTypeLit() %></td>
-        <td><%= chambre.getPrix_base() %></td>
+        <td><%= chambre.getprixBase() %></td>
     </tr>
     <% } %>
 

@@ -9,42 +9,67 @@ import java.util.Date;
 public class Reservation
 {
 
-    private long id;
-    private int idClient;
-    private int  idChambre;
-    private double prix_total;
-    private Date date_debut;
-    private Date date_fin;
+    private Integer idReservation;
+    private Integer idClient;
+    private Integer  idChambre;
+    private Double prixTotal;
+    private Date dateDebut;
+    private Date dateFin;
     private Client client;
     private Chambre chambre;
 
 
     // constructeurs de la classe
 
-    public Reservation(Document doc) {
-        this.idClient = doc.getInteger("idClient");
+//    public Reservation(Document doc) {
+//        this.idClient = doc.getInteger("idClient");
+//
+//       // this.idChambre = doc.getInteger("idChambre");
+//
+//        if (doc.getInteger("idReservation") == null || doc.getInteger("idClient") == null || doc.getInteger("idChambre") == null) {
+//            throw new RuntimeException("Un champ requis est manquant dans Reservation"); }
+//
+//        this.prixTotal = doc.getDouble("prixTotal");
+//        this.dateDebut = doc.getDate("dateDebut");
+//        this.dateFin = doc.getDate("dateFin");
+//    }
 
-        this.idChambre = doc.getInteger("idChambre");
+    public Reservation(Document d) {
+      //  System.out.println("DEBUG RESERVATION DOC: " + d.toJson());
 
-        this.prix_total = doc.getDouble("prix_total");
-        this.date_debut = doc.getDate("dateDebut");
-        this.date_fin = doc.getDate("dateFin");
-    }
+      //  try {
+            this.idReservation = d.getInteger("idReservation");
+            this.idClient = d.getInteger("idClient");
+            this.idChambre = d.getInteger("idChambre");
+            this.dateDebut = d.getDate("dateDebut");
+            this.dateFin = d.getDate("dateFin");
+            this.prixTotal = d.getDouble("prixTotal");
+
+//            // vérifie si des champs sont null
+//            if (idReservation == null || idClient == null || idChambre == null || dateDebut == null || dateFin == null || prixTotal == null) {
+//                throw new RuntimeException("Un champ requis est manquant dans Reservation");
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException("Un champ requis est manquant dans Reservation", e);
+//        }
+   }
 
 
-    public Reservation(int idClient, int idChambre, double prix_total, Date date_debut, Date date_fin) {
+
+    public Reservation(int idClient,int idReservation,int idChambre, Double prixTotal, Date dateDebut, Date dateFin) {
         this.idClient = idClient;
+        this.idReservation = idReservation;
 
         this.idChambre = idChambre;
-        this.prix_total = prix_total;
+        this.prixTotal = prixTotal;
 
-        this.date_debut = date_debut;
-        this.date_fin = date_fin;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
     }
 
 
     public Double getPrixTotal() {
-        return prix_total;
+        return prixTotal;
     }
 
     public Client getClient() { return this.client; }
@@ -54,8 +79,8 @@ public class Reservation
    // public Client getClient() {return this.idClient;}
 
     public int getIdClient() { return idClient; }
-    public Date getDate_debut() {
-        return date_debut;
+    public Date getDateDebut() {
+        return dateDebut;
     }
 
     public int getIdChambre() {
@@ -66,16 +91,16 @@ public class Reservation
        // return idChambre;
     //}
 
-    public void setDate_debut(Date date_debut) {
-        this.date_debut = date_debut;
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
-    public Date getDate_fin() {
-        return date_fin;
+    public Date getDateFin() {
+        return dateFin;
     }
 
-    public void setDate_fin(Date date_fin) {
-        this.date_fin = date_fin;
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
     }
 
 
@@ -83,9 +108,11 @@ public class Reservation
     {
         return new Document().append("idClient", idClient)
                 .append("idChambre", idChambre)
-                .append("prix_total", prix_total)
-                .append("date_debut", date_debut)
-                .append("date_fin", date_fin);
+                .append("prixTotal", prixTotal)
+                .append("dateDebut", dateDebut)
+                .append("dateFin", dateFin)
+                .append("idReservation", idReservation);
+
     }
 
 
@@ -93,12 +120,12 @@ public class Reservation
     public void printInfo()
     {
 
-        System.out.println("Date de début : " + date_debut.toString());
+        System.out.println("Date de début : " + dateDebut.toString());
 
-        System.out.println("Date de fin : " + date_fin.toString());
+        System.out.println("Date de fin : " + dateFin.toString());
 
 
-        System.out.println("Prix total : " + prix_total);
+        System.out.println("Prix total : " + prixTotal);
 
     }
 }

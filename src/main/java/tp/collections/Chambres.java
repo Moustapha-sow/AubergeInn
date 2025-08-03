@@ -48,9 +48,9 @@ public class Chambres {
 
 
    // l ajout d une nouvelle chambre
-    public Chambre ajouterChambre(int idChambre, String nom_chambre, String type_lit, double prix_base) {
+    public Chambre ajouterChambre(int idChambre, String nomChambre, String typeLit, Double prixBase) {
 
-        Chambre chambre = new Chambre(idChambre, nom_chambre, type_lit, prix_base);
+        Chambre chambre = new Chambre(idChambre, nomChambre, typeLit, prixBase);
 
 
         chambresCollection.insertOne(chambre.toDocument());
@@ -66,11 +66,11 @@ public class Chambres {
     }
 
 // fonction modifierChambre
-    public boolean modifierChambre(int idChambre, String nouveauNom, String nouveauTypeLit, double nouveauPrix) {
+    public boolean modifierChambre(int idChambre, String nouveauNom, String nouveauTypeLit, Double nouveauPrix) {
         Document updateFields = new Document()
-                .append("nom_chambre", nouveauNom)
-                .append("type_lit", nouveauTypeLit)
-                .append("prix_base", nouveauPrix);
+                .append("nomChambre", nouveauNom)
+                .append("typeLit", nouveauTypeLit)
+                .append("prixBase", nouveauPrix);
 
         Document update = new Document("$set", updateFields);
         return chambresCollection.updateOne(eq("idChambre", idChambre), update).getModifiedCount() > 0;
@@ -90,20 +90,35 @@ public class Chambres {
     }
 
 
-    public List<Chambre> getAllChambres() {
+//    public List<Chambre> getAllChambres() {
+//        List<Chambre> chambres = new LinkedList<>();
+//        try (MongoCursor<Document> doc = chambresCollection.find().iterator()) {
+//            while (doc.hasNext()) {
+//
+//                Document document = doc.next();
+//
+//                // Crée un objet Chambre à partir du document et l'ajoute à la liste
+//                chambres.add(new Chambre(document));
+//            }
+//        }
+//
+//        return chambres;
+//    }
+
+
+    /**
+     * Lecture de toutes les chambres
+     */
+    public List<Chambre> getAllChambres(){
         List<Chambre> chambres = new LinkedList<>();
-
-
-        try (MongoCursor<Document> doc = chambresCollection.find().iterator()) {
-            while (doc.hasNext()) {
-
-                Document document = doc.next();
-
-                // Crée un objet Chambre à partir du document et l'ajoute à la liste
-                chambres.add(new Chambre(document));
+        MongoCursor<Document> cursor = chambresCollection.find().iterator();
+        try {
+            while(cursor.hasNext()){
+                chambres.add(new Chambre(cursor.next()));
             }
+        } finally {
+            cursor.close();
         }
-
         return chambres;
     }
 

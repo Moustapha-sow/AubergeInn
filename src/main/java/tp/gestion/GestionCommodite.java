@@ -25,7 +25,7 @@ public class GestionCommodite {
         this.chambres = chambres;
     }
 
-    public void ajouterCommodite(int idCommodite, String description, double surplusPrix) throws AubergeInnException {
+    public void ajouterCommodite(int idCommodite, String description, Double surplusPrix) throws AubergeInnException {
         if (commodites.existe(idCommodite)) {
             throw new AubergeInnException("La commodité #" + idCommodite + " existe déjà.");
         }

@@ -36,11 +36,11 @@ public class GestionChambre {
     /**
      * Ajoute une chambre avec les informations fournies à la BD.
      */
-    public void ajouterChambre(int idChambre, String nom_chambre, String type_lit, double prix_base) throws AubergeInnException {
+    public void ajouterChambre(int idChambre, String nomChambre, String typeLit, Double prixBase) throws AubergeInnException {
         if (chambres.existe(idChambre)) {
             throw new AubergeInnException("La chambre : " + idChambre + " existe déjà.");
         }
-        chambres.ajouterChambre(idChambre, nom_chambre, type_lit, prix_base);
+        chambres.ajouterChambre(idChambre, nomChambre, typeLit, prixBase);
     }
 
     /**
@@ -58,7 +58,7 @@ public class GestionChambre {
         if (!reservation.isEmpty()) {
             Date today = new Date();
             for (Reservation res : reservation) {
-                if (today.before(res.getDate_fin())) {
+                if (today.before(res.getDateFin())) {
                     throw new AubergeInnException("Chambre " + idChambre + " est déjà réservée.");
                 }
             }

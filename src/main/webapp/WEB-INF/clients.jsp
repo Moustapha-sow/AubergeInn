@@ -10,6 +10,7 @@
 <%@ page import="tp.objets.Reservation" %>
 <%@ page import="com.example.tp.AubergeHelper" %>
 <%@ page import="tp.gestion.GestionChambre" %>
+<%@ page import="org.bson.Document" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -84,6 +85,7 @@
 
 
 <%
+    if (clients != null) {
     for (Client client : clients) {
 %>
     <!-- Modals pour afficher les details d'un client -->
@@ -128,12 +130,23 @@
                                     </thead>
                                     <tbody>
                                     <%
+
                                         List<Reservation> reservations = AubergeHelper.gestionAubergInnInterro(session).getGestionReservation().getReservationsClient(client.getIdClient());
                                         if (reservations != null && !reservations.isEmpty()) {
                                             for (Reservation reservation : reservations) {
                                     %>
                                     <tr>
-                                        <td><%= gestionChambre.getChambre(reservation.getIdChambre()).getNomChambre() %></td>
+                                    <%--<td><%= gestionChambre.getChambre(reservation.getIdChambre()).getNomChambre() %></td>--%>
+                                        <td>
+                                            <%
+                                                try {
+                                                    System.out.print(gestionChambre.getChambre(reservation.getIdChambre()).getNomChambre());
+                                                } catch (main.AubergeInnException e) {
+                                                    System.out.print("Erreur: " + e.getMessage()); // ou un message plus neutre, comme "Inconnue"
+                                                }
+                                            %>
+                                        </td>
+
                                         <td><%= reservation.getDateDebut() %></td>
                                         <td><%= reservation.getDateFin() %></td>
                                         <td><%= reservation.getPrixTotal() %> $</td>
@@ -280,6 +293,11 @@
 
 </script>
 <% } %>
+<%
+    } // <-- fin du for
+        // <-- fin du if
+%>
+
 <jsp:include page="footer.jsp" />
 <jsp:include page="alertMessages.jsp" />
 </body>

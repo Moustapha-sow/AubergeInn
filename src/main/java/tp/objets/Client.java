@@ -20,7 +20,13 @@ public class Client {
 
     //Constructeur de la classe
     public Client(Document doc) {
-        this.idClient = doc.getInteger("idClient");
+        System.out.println("DOC BRUT: " + doc.toJson());
+
+        this.idClient = doc.getInteger("idClient", 0);
+//        this.idClient = doc.get("idClient") instanceof Long ?
+//                ((Long) doc.get("idClient")).intValue() :
+//                doc.getInteger("idClient");
+        //this.idClient = doc.getInteger("idClient");
         this.nom = doc.getString("nom");
         this.prenom = doc.getString("prenom");
         this.age = doc.getInteger("age");

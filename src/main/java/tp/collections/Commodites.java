@@ -45,7 +45,7 @@ public class Commodites
      * Ajoute une nouvelle commodité dans la base de données.
      */
 
-    public Commodite ajouterCommodite(int idCommodite, String description, double surplusPrix) {
+    public Commodite ajouterCommodite(int idCommodite, String description, Double surplusPrix) {
         Commodite comm = new Commodite(idCommodite, description, surplusPrix);
         commoditesCollection.insertOne(comm.toDocument());
         return comm;
@@ -90,7 +90,7 @@ public class Commodites
 
 
     // cette fonction est facultative
-    public boolean modifierCommodite(int idCommodite, String nouvelleDescription, double nouveauSurplus) {
+    public boolean modifierCommodite(int idCommodite, String nouvelleDescription, Double nouveauSurplus) {
         Document updateFields = new Document()
                 .append("description", nouvelleDescription)
                 .append("surplus_Prix", nouveauSurplus);
