@@ -37,7 +37,7 @@
 
 ---
  ## ******la connexion a la Base de données****** 
-vous pouvez utiliser mes identifiants
+vous pouvez utiliser mes identifiants "Moustapha sow "
  - user: ift287_69
 - mot de passe: Eithavangae7
 - serveur: dinf
@@ -48,3 +48,5 @@ vous pouvez utiliser mes identifiants
 - password: admin
 
 
+## **Entite association**
+Nous avons mis le diagramme entité association dans le document Enité association et sql table 
