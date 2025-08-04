@@ -14,14 +14,18 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+//servlet class Clients
 
 public class Clients extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Servlet Client : GET");
+
         if (estConnecter(request, response)) {
+
             System.out.println("Servlet Client : GET dispatch vers Clients.jsp");
+
             Dispatch(AubergeConstantes.CLIENTS, request, response);
         }
     }
@@ -29,26 +33,34 @@ public class Clients extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Servlet Client : POST");
+
         if (estConnecter(request, response)) {
             System.out.println("Servlet Client : POST dispatch vers Clients.jsp");
+
             try {
                 HttpSession session = request.getSession();
+
                 String idClient = request.getParameter("idClient");
                 request.setAttribute("idClient", idClient);
+
 
                 if (champVide(idClient)) {
                     throw new AubergeInnException("ID client est vide");
                 }
 
                 GestionClient gestionClient = AubergeHelper.gestionAubergInnInterro(session).getGestionClient();
+
                 GestionReservation gestionReservation  =  AubergeHelper.gestionAubergInnInterro(session).getGestionReservation();
 
                 // Ajouter les informations du client et les réservations à la requête
                 request.setAttribute("client", gestionClient.getClient(toInt(idClient)));
+
                 request.setAttribute("reservation", gestionReservation.getReservationsClient(toInt(idClient)));
             } catch (Exception e) {
+
                 List<String> listeMessageErreur = new LinkedList<>();
                 listeMessageErreur.add(e.getMessage());
+
                 request.setAttribute("listeMessageErreur", listeMessageErreur);
             }
 

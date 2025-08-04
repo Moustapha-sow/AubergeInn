@@ -84,10 +84,10 @@
 
 
 
-<%
-    if (clients != null) {
-    for (Client client : clients) {
-%>
+    <%
+        if (clients != null) {
+            for (Client client : clients) {
+    %>
     <!-- Modals pour afficher les details d'un client -->
     <div class="modal fade" id="showClientModal<%= client.getIdClient() %>" tabindex="-1" aria-labelledby="showClientModalLabel<%= client.getIdClient() %>" aria-hidden="true">
         <div class="modal-dialog">
@@ -136,7 +136,7 @@
                                             for (Reservation reservation : reservations) {
                                     %>
                                     <tr>
-                                    <%--<td><%= gestionChambre.getChambre(reservation.getIdChambre()).getNomChambre() %></td>--%>
+                                        <%--<td><%= gestionChambre.getChambre(reservation.getIdChambre()).getNomChambre() %></td>--%>
                                         <td>
                                             <%
                                                 try {
@@ -254,39 +254,39 @@
         endDateInput.min = startDate;
     }
 
-        function updateAvailableRooms(clientId) {
+    function updateAvailableRooms(clientId) {
         const dateDebut = document.getElementById('dateDebut' + clientId).value;
         const dateFin = document.getElementById('dateFin' + clientId).value;
 
         if (dateDebut && dateFin) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", "AvailableRoomsServlet?dateDebut="+dateDebut+"&dateFin="+dateFin, true);
-        xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-        const chambres = JSON.parse(xhr.responseText);
-        const roomSelect = document.getElementById('idChambre' + clientId);
-        roomSelect.innerHTML = "";
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "AvailableRoomsServlet?dateDebut="+dateDebut+"&dateFin="+dateFin, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const chambres = JSON.parse(xhr.responseText);
+                    const roomSelect = document.getElementById('idChambre' + clientId);
+                    roomSelect.innerHTML = "";
 
-        chambres.forEach(function(chambre) {
-        const option = document.createElement("option");
-        option.value = chambre.idChambre;
-        option.textContent = chambre.nomChambre;
-        roomSelect.appendChild(option);
+                    chambres.forEach(function(chambre) {
+                        const option = document.createElement("option");
+                        option.value = chambre.idChambre;
+                        option.textContent = chambre.nomChambre;
+                        roomSelect.appendChild(option);
 
-    });
-    } else if (xhr.readyState === 4 && xhr.status !== 200) {
-        alert("Erreur lors de la récupération des chambres disponibles.");
-    }
-    };
-        xhr.send();
-    }
+                    });
+                } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                    alert("Erreur lors de la récupération des chambres disponibles.");
+                }
+            };
+            xhr.send();
+        }
     }
 
-        document.getElementById("dateDebut<%= client.getIdClient() %>").addEventListener('change', function() {
+    document.getElementById("dateDebut<%= client.getIdClient() %>").addEventListener('change', function() {
         updateAvailableRooms('<%= client.getIdClient() %>');
     });
 
-        document.getElementById("dateFin<%= client.getIdClient() %>").addEventListener('change', function() {
+    document.getElementById("dateFin<%= client.getIdClient() %>").addEventListener('change', function() {
         updateAvailableRooms('<%= client.getIdClient() %>');
     });
 
@@ -295,11 +295,10 @@
 <% } %>
 <%
     } // <-- fin du for
-        // <-- fin du if
+    // <-- fin du if
 %>
 
 <jsp:include page="footer.jsp" />
 <jsp:include page="alertMessages.jsp" />
 </body>
 </html>
-

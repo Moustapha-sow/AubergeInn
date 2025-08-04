@@ -12,14 +12,17 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+//servlet class Add
 
 public class Chambres extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Servlet Chambres : GET");
+
         if (estConnecter(request, response)) {
             System.out.println("Servlet Chambres : GET dispatch vers Chambres.jsp");
+
             Dispatch(AubergeConstantes.CHAMBRES, request, response);
         }
     }
@@ -27,31 +30,53 @@ public class Chambres extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Servlet Chambres : POST");
-        if (estConnecter(request, response)) {
-            System.out.println("Servlet Chambres : POST dispatch vers Chambres.jsp");
-            try{
-                HttpSession session = request.getSession();
-                String idChambre = request.getParameter("idChambre");
-                request.setAttribute("idChambre", idChambre);
 
-                if(champVide(idChambre)){
-                    throw new AubergeInnException("ID chambre est vide");
+
+        if (estConnecter(request, response)) {
+            HttpSession session = request.getSession();
+
+            List<String> listeMessageErreur = new LinkedList<>();
+
+            try {
+
+                String idChambreStr = request.getParameter("idChambre");
+
+                String nomChambre = request.getParameter("nomChambre");
+                String typeLit = request.getParameter("typeLit");
+
+                String prixBaseStr = request.getParameter("prixBase");
+
+                // Vérification des champs vides
+                if (champVide(idChambreStr) || champVide(nomChambre) || champVide(typeLit) || champVide(prixBaseStr)) {
+                    throw new AubergeInnException("Tous les champs doivent être remplis.");
                 }
+
+                int idChambre = toInt(idChambreStr);
+
+                double prixBase = Double.parseDouble(prixBaseStr);
+
 
                 GestionChambre gestionChambre = AubergeHelper.gestionAubergInnInterro(session).getGestionChambre();
 
-                // Ajouter les informations du Chambre et les commodités à la requête
-                request.setAttribute("chambre", gestionChambre.getChambre(toInt(idChambre)));
-                request.setAttribute("commoditesLieAChambre", gestionChambre.getListeCommoditesChambre(toInt(idChambre)));
+
+                gestionChambre.ajouterChambre(idChambre, nomChambre, typeLit, prixBase);
+
+                request.setAttribute("messageSucces", "Chambre ajoutée avec succès.");
+
+                // Charger la chambre et ses commodités pour affichage
+                request.setAttribute("chambre", gestionChambre.getChambre(idChambre));
+
+                request.setAttribute("commoditesLieAChambre", gestionChambre.getListeCommoditesChambre(idChambre));
 
             } catch (Exception e) {
-                List<String> listeMessageErreur = new LinkedList<>();
                 listeMessageErreur.add(e.getMessage());
+
                 request.setAttribute("listeMessageErreur", listeMessageErreur);
             }
 
+
             Dispatch(AubergeConstantes.CHAMBRES, request, response);
         }
-
     }
+
 }

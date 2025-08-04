@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: zouba
-  Date: 2024-08-01
-  Time: 13:09
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page import="java.util.List" %>
 <%@ page import="tp.objets.Chambre" %>
 <%@ page import="tp.objets.Commodite" %>
@@ -15,25 +9,33 @@
 <jsp:include page="head.jsp" />
 <body>
 <div class="container">
+
     <jsp:include page="navigation.jsp"/>
 
     <h1>Chambres</h1>
 
+
     <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addChambreModal">
         Ajouter une chambre
+
     </button>
+
 
     <h2>Liste des Chambres</h2>
     <%
         List<Chambre> chambres = null;
+
+
         try {
             chambres = AubergeHelper.gestionAubergInnInterro(session).getGestionChambre().getAllChambres();
         } catch (Exception e) {
             throw new RuntimeException(e);
+
         }
         if (chambres != null && !chambres.isEmpty()) {
     %>
     <div class="table-responsive">
+
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-dark">
             <tr>
@@ -44,6 +46,7 @@
                 <th>Actions</th>
             </tr>
             </thead>
+
             <tbody>
             <%
                 for (Chambre chambre : chambres) {
@@ -54,6 +57,7 @@
                 <td><%= chambre.getTypeLit() %></td>
                 <td><%= chambre.getprixBase() %> $</td>
                 <td>
+
                     <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewChambreModal<%= chambre.getIdChambre() %>">
                         Voir
                     </button>
@@ -64,6 +68,7 @@
                         Supprimer
                     </button>
                 </td>
+
             </tr>
             <%
                 }

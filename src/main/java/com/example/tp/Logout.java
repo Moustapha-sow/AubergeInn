@@ -7,12 +7,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+//servlet class Logout
+
 public class Logout extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+
             throws ServletException, IOException {
         request.getSession().invalidate();
+
 
         AubergeHelper.Dispatch(AubergeConstantes.LOGIN,request,response);
     }

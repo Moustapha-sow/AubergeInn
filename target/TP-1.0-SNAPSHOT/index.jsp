@@ -1,16 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-  if(getServletContext().getAttribute("serveur") != null)
-  {%>
-<jsp:forward page="/WEB-INF/login.jsp" />
-<%}
-%>
+<%--<%--%>
+<%--  if(getServletContext().getAttribute("serveur") != null)--%>
+<%--  {%>--%>
+<%--<jsp:forward page="/WEB-INF/login.jsp" />--%>
+<%--<%}--%>
+<%--%>--%>
 <!DOCTYPE html>
 <html>
 <head>
+
+
+
+
   <title>IFT287 - Système de gestion de aubergeInn</title>
-  <meta name="author" content="Vincent Ducharme">
-  <meta name="description" content="Page d'accueil du système de gestion de la bilbiothèque.">
+
+  <meta name="description" content="Page d'accueil du projet AubergeInn">
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -18,10 +22,44 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <style>
+    body {
+    <h2 style="color: red;">TEST DE COULEUR</h2>
+
+    background-color: #f5f5dc !important; /* beige clair */
+    }
+
+    h1 {
+      color: #5c4033 !important; /* brun foncé */
+      margin-top: 30px !important;
+    }
+
+    .form-control {
+      background-color: #fffaf0 !important; /* blanc cassé */
+      border: 1px solid #ccc !important;
+    }
+
+    .btn-primary {
+      background-color: #228B22 !important; /* vert forêt */
+      border-color: #228B22 !important;
+    }
+
+    .btn-primary:hover {
+      background-color: #1e7e1e !important;
+      border-color: #1c751c !important;
+    }
+
+    .container {
+      padding-top: 40px !important;
+      padding-bottom: 40px !important;
+      border-radius: 10px !important;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-  <h1 class="text-center">Système de gestion de la aubergeInn</h1>
+  <h1 class="text-center">Système de gestion d' AUBERGEINN</h1>
   <div class="col-md-4 offset-md-4">
     <form action="Login" method="POST">
       <div class="form-group">
@@ -43,7 +81,7 @@
         <label for="bd">Nom de la base de donnée</label>
         <input class="form-control" type="TEXT" name="bd" value="<%= (request.getAttribute("bd") != null ? (String)request.getAttribute("bd") : "") %>" placeholder="ift287_XXdb">
       </div>
-      <input class="btn btn-primary" type="SUBMIT" name="inscrire" value="S'incrire">
+      <input class="btn btn-primary" type="SUBMIT" name="inscrire" value="connexion BD">
     </form>
   </div>
 </div>

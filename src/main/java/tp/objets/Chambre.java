@@ -25,8 +25,9 @@ public class Chambre
 
 // constructeur de classe
     public Chambre(Document d) {
-        Integer id = d.getInteger("idChambre");
-        this.idChambre = (id != null) ? id : 0;
+//        Integer id = d.getInteger("idChambre");
+//        this.idChambre = (id != null) ? id : 0;
+        this.idChambre = d.getInteger("idChambre", 0);
         this.nomChambre = d.getString("nomChambre");
         this.typeLit = d.getString("typeLit");
         this.prixBase = d.getDouble("prixBase");
@@ -57,7 +58,7 @@ public class Chambre
     public Double getprixBase() {
         return prixBase;
     }
-    
+
     public String getNomChambre() {
         return this.nomChambre;
     }
@@ -115,6 +116,7 @@ public class Chambre
         System.out.println("Nom de la chambre : " + nomChambre);
         System.out.println("Type de lit : " + typeLit);
 
+
         System.out.println("Prix  : " + getPrixTotal());
         if (!(commodites.size() > 0))
             System.out.println("pas de commodites.");
@@ -125,6 +127,7 @@ public class Chambre
         }
     }
 
+
     // fonction pour afficher les Commodites
     private void printCommodites()
     {
@@ -133,6 +136,7 @@ public class Chambre
             com.printInfo();
         }
     }
+
 
 
 
@@ -151,8 +155,8 @@ public class Chambre
     public Document toDocument()
     {
         return new Document().append("idChambre", idChambre)
-                .append("nom de Chambre", nomChambre)
-                .append("type de Lit", typeLit)
+                .append("nomChambre", nomChambre)
+                .append("typeLit", typeLit)
                 .append("prixBase", prixBase);
 
     }

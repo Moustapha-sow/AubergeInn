@@ -14,14 +14,20 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+
+//servlet class InclureCommodite
+
 public class InclureCommodite extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Servlet InclureCommodite");
+
         if(estConnecter(request, response)){
+
             int idChambre = Integer.parseInt(request.getParameter("idChambre"));
             request.setAttribute("idChambre",idChambre);
+
             Dispatch(AubergeConstantes.CHAMBRES, request, response);
         }
     }
@@ -30,32 +36,43 @@ public class InclureCommodite extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (estConnecter(request, response)) {
 
+
             System.out.println("Servlet InclureCommodite");
             try {
                 HttpSession session = request.getSession();
 
+
                 String idChambre = request.getParameter("idChambre");
+
                 String idCommodite = request.getParameter("idCommodite");
 
                 request.setAttribute("idChambre", idChambre);
+
                 request.setAttribute("idCommodite", idCommodite);
 
                 if (idChambre == null || idChambre.isEmpty() || idCommodite == null || idCommodite.isEmpty()) {
-                    throw new AubergeInnException("L'ID de la chambre et de la commodité sont obligatoires au niveau de Post InclureCommodite");
+
+                    throw new AubergeInnException("L'ID de la chambre et de la commodité sont obligatoires");
                 }
 
                 GestionChambre gestionChambre = AubergeHelper.gestionAubergInnInterro(session).getGestionChambre();
+
                 gestionChambre.inclureCommodite(toInt(idChambre), toInt(idCommodite));
 
+
                 List<String> listeMessageSuccess = new LinkedList<>();
+
                 listeMessageSuccess.add("Commodite " + idCommodite + " est ajouté à la chambre "+ idChambre + " Avec succès");
                 request.setAttribute("listeMessageSuccess", listeMessageSuccess);
+
 
                 Dispatch(AubergeConstantes.CHAMBRES, request, response);
 
             } catch (Exception e) {
+
                 List<String> listeMessageErreur = new LinkedList<>();
                 listeMessageErreur.add(e.getMessage());
+
                 request.setAttribute("listeMessageErreur", listeMessageErreur);
 
                 doGet(request, response);

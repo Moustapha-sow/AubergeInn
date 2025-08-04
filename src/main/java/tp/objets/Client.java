@@ -20,7 +20,7 @@ public class Client {
 
     //Constructeur de la classe
     public Client(Document doc) {
-        System.out.println("DOC BRUT: " + doc.toJson());
+      //  System.out.println("DOC BRUT: " + doc.toJson());
 
         this.idClient = doc.getInteger("idClient", 0);
 //        this.idClient = doc.get("idClient") instanceof Long ?

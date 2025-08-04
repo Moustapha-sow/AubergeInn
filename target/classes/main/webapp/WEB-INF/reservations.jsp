@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: zouba
-  Date: 2024-08-04
-  Time: 13:09
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page import="java.util.List" %>
 <%@ page import="tp.objets.Client" %>
 <%@ page import="tp.objets.Chambre" %>
@@ -13,11 +7,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Réservations - AubergeInn</title>
     <meta charset="UTF-8">
+
 </head>
 <body>
+
 <div class="container">
 
 </div>
@@ -25,20 +22,24 @@
 
 <h1>Réservations</h1>
 
+
 <h2>Liste des réservations</h2>
 <%
+
     List<Reservation> reservations = (List<Reservation>) request.getAttribute("reservationsAll");
 
     if (reservations != null && !reservations.isEmpty()) {
 %>
 <table>
     <tr>
+
         <th>Client</th>
         <th>Chambre</th>
         <th>Prix total</th>
         <th>Date de début</th>
         <th>Date de fin</th>
     </tr>
+
 
     <% for (Reservation reservation : reservations) { %>
     <tr>

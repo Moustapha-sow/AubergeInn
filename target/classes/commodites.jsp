@@ -1,42 +1,45 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: zouba
-  Date: 2024-08-01
-  Time: 13:09
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page import="java.util.List" %>
 <%@ page import="tp.objets.Commodite" %>
 <%@ page import="com.example.tp.AubergeHelper" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
+
 <html>
 <jsp:include page="head.jsp" />
+
 <body>
 <div class="container">
+
     <jsp:include page="navigation.jsp"/>
 
     <div class="container mt-4">
+
         <h1>Commodités</h1>
 
         <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addCommoditeModal">
             Ajouter une commodité
         </button>
 
+
         <h2>Liste des Commodités</h2>
         <%
             List<Commodite> commodites = AubergeHelper.gestionAubergInnInterro(session).getGestionCommodite().getTouteLesCommodites();
             if (commodites != null && !commodites.isEmpty()) {
         %>
+
         <div class="table-responsive">
+
             <table class="table table-striped table-hover">
                 <thead class="table-dark">
+
                 <tr>
                     <th>ID</th>
                     <th>Description</th>
                     <th>Prix Surplus</th>
                     <th>Actions</th>
                 </tr>
+
                 </thead>
                 <tbody>
                 <%
@@ -51,9 +54,11 @@
 
                 <%
                     }
+
                 %>
                 </tbody>
             </table>
+
         </div>
         <%
         } else {
