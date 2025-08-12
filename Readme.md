@@ -39,9 +39,11 @@
  ## ******la connexion a la Base de données****** 
 vous pouvez utiliser mes identifiants "Moustapha sow "
  - user: ift287_69
-- mot de passe: Eithavangae7
+- mot de passe: "demander a Moustaphasoworking@gmail.com"
 - serveur: dinf
-- nom BD: ift287_69db
+- nom BD: "Demander a Moustaphasoworking@gmail.com"
+
+  oubien connecter a votre base de données MONGODB.
 
 ## ********Connexion au site******** 
 - user: admin
