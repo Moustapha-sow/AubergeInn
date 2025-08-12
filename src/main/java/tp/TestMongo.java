@@ -25,7 +25,7 @@ public class TestMongo {
             // Connexion à MongoDB local ou distant
            // Connexion cx = new Connexion("local", "aubergeInn", "", "");
             // ou :
-             Connexion cx = new Connexion("dinf", "ift287_69db", "ift287_69", "Eithavangae7");
+             Connexion cx = new Connexion("dinf", "a_demander", "ift287_69", "a_demander");
 
             MongoDatabase db = cx.getDatabase();
 
